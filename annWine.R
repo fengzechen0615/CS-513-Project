@@ -12,7 +12,7 @@ library(NeuralNetTools)
 ## read CSV file
 
 setwd("/Users/louyilin/RStudioProjects/FinalProject")
-data<-read.csv("winequalityN.csv",header = TRUE,na.strings = "?")
+data<-read.csv("winequality-red.csv",header = TRUE,na.strings = "?")
 #  clean NA datas
 # The predictor vars must be scaled data for the ANN fitting
 
@@ -38,8 +38,8 @@ trainNN<-annScaled[idx,]
 testNN<-annScaled[-idx,]
 
 ## ANN
-ANN<- neuralnet(quality~fixed.acidity+volatile.acidity+citric.acid+residual.sugar+chlorides+free.sulfur.dioxide+total.sulfur.dioxide+density+pH+sulphates+alcohol,data=trainNN,hidden=c(4,2), threshold=0.01,act.fct = "logistic", linear.output = FALSE)
-
+#ANN<- neuralnet(quality~fixed.acidity+volatile.acidity+citric.acid+residual.sugar+chlorides+free.sulfur.dioxide+total.sulfur.dioxide+density+pH+sulphates+alcohol,data=trainNN,hidden=c(4,2), threshold=0.01,act.fct = "logistic", linear.output = FALSE)
+ANN<- neuralnet(quality~.,data=trainNN,hidden=c(4,2), threshold=0.01,act.fct = "logistic", linear.output = FALSE)
 #plot(ANN)
 k=ANN$result.matrix
 p=ANN$net.result
