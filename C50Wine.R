@@ -11,6 +11,8 @@ data <- na.omit(data)
 data$type = as.integer(as.factor(data$type))
 data$quality = as.factor(data$quality)
 
+set.seed(123)
+
 idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
 training <- data[idx, ]
 test <- data[-idx, ]
@@ -56,9 +58,7 @@ test <- data[-idx, ]
 
 # CF = 0.13
 
-set.seed(123)
-
-C50Class <- C5.0(as.factor(quality)~., data=training, control = C5.0Control(CF = 0.13), trials = 30)
+C50Class <- C5.0(as.factor(quality)~., data=training, control=C5.0Control(CF = 0.13), trials=30)
 
 # plot(C50Class)
 

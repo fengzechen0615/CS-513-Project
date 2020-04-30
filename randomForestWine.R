@@ -11,6 +11,8 @@ data <- na.omit(data)
 data$type = as.integer(as.factor(data$type))
 data$quality = as.integer(as.factor(data$quality))
 
+set.seed(123)
+
 idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
 training <- data[idx, ]
 test <- data[-idx, ]
