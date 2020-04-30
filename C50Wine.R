@@ -6,9 +6,8 @@ rm(list = ls())
 
 library('C50')
 
-data <- read.csv('WineQuality.csv', header=TRUE)
+data <- read.csv('winequality-red.csv', header=TRUE)
 data <- na.omit(data)
-data$type = as.integer(as.factor(data$type))
 data$quality = as.factor(data$quality)
 
 set.seed(123)
@@ -39,28 +38,26 @@ test <- data[-idx, ]
 # err <- err.rate(training, test)
 
 # alpha       res
-# 1   0.25 0.5745229
-# 2   0.24 0.5740072
-# 3   0.23 0.5740072
-# 4   0.22 0.5740072
-# 5   0.21 0.5724600
-# 6   0.20 0.5760701
-# 7   0.19 0.5750387
-# 8   0.18 0.5755544
-# 9   0.17 0.5786488
-# 10  0.16 0.5781331
-# 11  0.15 0.5791645
-# 12  0.14 0.5812274
-# 13  0.13 0.5853533
-# 14  0.12 0.5760701
-# 15  0.11 0.5760701
-# 16  0.10 0.5843218
+# 1   0.25 0.5979167
+# 2   0.24 0.5979167
+# 3   0.23 0.5979167
+# 4   0.22 0.5958333
+# 5   0.21 0.5833333
+# 6   0.20 0.5833333
+# 7   0.19 0.5833333
+# 8   0.18 0.5854167
+# 9   0.17 0.5854167
+# 10  0.16 0.5854167
+# 11  0.15 0.5854167
+# 12  0.14 0.6020833
+# 13  0.13 0.6166667
+# 14  0.12 0.6166667
+# 15  0.11 0.6145833
+# 16  0.10 0.6145833
 
-# CF = 0.13
+# CF = 0.20
 
-C50Class <- C5.0(as.factor(quality)~., data=training, control=C5.0Control(CF = 0.13), trials=30)
-
-# plot(C50Class)
+C50Class <- C5.0(as.factor(quality)~., data=training, control=C5.0Control(CF = 0.20), trials=60)
 
 C50Predict <- predict(C50Class, test, type="class")
 table(actual=test$quality, C50=C50Predict)
