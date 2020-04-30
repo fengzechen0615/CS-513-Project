@@ -6,15 +6,17 @@ rm(list = ls())
 
 library("randomForest")
 
-data <- read.csv('winequality-red.csv', header=TRUE)
-data <- na.omit(data)
-data$quality = as.integer(as.factor(data$quality))
+# class = 7
 
-set.seed(123)
-
-idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
-training <- data[idx, ]
-test <- data[-idx, ]
+# data <- read.csv('winequality-red.csv', header=TRUE)
+# data <- na.omit(data)
+# data$quality = as.integer(as.factor(data$quality))
+# 
+# set.seed(123)
+# 
+# idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
+# training <- data[idx, ]
+# test <- data[-idx, ]
 
 # find the best mtry
 # n <- length(names(training))
@@ -40,7 +42,7 @@ test <- data[-idx, ]
 
 # when trees equal 600, the model is becoming steady.
 
-randomForest <- randomForest(as.factor(quality)~., data=training, mtry=6, importance=TRUE, ntree=600, proximity=TRUE)
+# randomForest <- randomForest(as.factor(quality)~., data=training, mtry=6, importance=TRUE, ntree=600, proximity=TRUE)
 
 # importance(randomForest)
 # max alcohol
@@ -48,6 +50,58 @@ randomForest <- randomForest(as.factor(quality)~., data=training, mtry=6, import
 
 # varImpPlot(randomForest)
 
+# randomForestPrediction <- predict(randomForest, test)
+# 
+# table(actual=test$quality, Prediction=randomForestPrediction)
+# 
+# wrong <- (test$quality != randomForestPrediction)
+# randomForestRate = sum(wrong)/length(test$quality)
+# 
+# print(paste("Accuracy Rate is: ", (1-randomForestRate)*100))
+# "Accuracy Rate is: 71"
+
+
+# class = 3
+
+data <- read.csv('winequality-red.csv', header=TRUE)
+data <- na.omit(data)
+# data$quality = as.factor(data$quality)
+
+data$quality[which(data$quality %in% c(3, 4, 5))] = "low"
+data$quality[which(data$quality %in% c(6))] = "medium"
+data$quality[which(data$quality %in% c(7, 8, 9))] = "high"
+
+set.seed(123)
+
+idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
+training <- data[idx, ]
+test <- data[-idx, ]
+
+# find the best mtry
+# n <- length(names(training))
+# rate = 1
+# for (i in 1: (n - 1)) {
+#   print(i)
+#   set.seed(100)
+#   rf = randomForest(as.factor(quality)~., data=training, ntree=1000, mtry=i)
+#   rate[i] <- mean(as.numeric(rf$err.rate))
+#   print(rf)
+# }
+# 
+# rate
+# plot(rate)
+
+# 0.3354853 0.3297664 0.3281737 0.3200239 0.3245834 0.3239456 0.3223861 0.3262303 0.3239999 0.3273806 0.3255801
+# which.min(rate)
+# mtry = 4
+
+# find the best ntree
+# rf <- randomForest(as.factor(quality)~., data=training, mtry=4, importance=TRUE, ntree=1000)
+# plot(rf)
+
+# when trees equal 600, the model is becoming steady.
+
+randomForest <- randomForest(as.factor(quality)~., data=training, mtry=4, importance=TRUE, ntree=600, proximity=TRUE)
 randomForestPrediction <- predict(randomForest, test)
 
 table(actual=test$quality, Prediction=randomForestPrediction)
@@ -56,3 +110,4 @@ wrong <- (test$quality != randomForestPrediction)
 randomForestRate = sum(wrong)/length(test$quality)
 
 print(paste("Accuracy Rate is: ", (1-randomForestRate)*100))
+# "Accuracy Rate is: 73"

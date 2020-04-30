@@ -19,9 +19,6 @@ idx <- sort(sample(nrow(data), as.integer((.70 * nrow(data)))))
 training <- data[idx, ]
 test <- data[-idx, ]
 
-# Grow the tree
-# dev.off()
-
 # vec <- c(0,   1,   2,   1,   2,  1,  1,
 #          0.9, 0,   2,   1,   1,   1,  1,
 #          1,   1,   0,   1.6, 1,   1,  1,
