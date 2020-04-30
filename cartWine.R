@@ -9,9 +9,8 @@ library(rpart.plot)
 library(RColorBrewer)
 library(rattle)
 
-data <- read.csv('WineQuality.csv', header=TRUE)
+data <- read.csv('winequality-red.csv', header=TRUE)
 data <- na.omit(data)
-data$type = as.integer(as.factor(data$type))
 data$quality = as.factor(data$quality)
 
 set.seed(123)
@@ -23,17 +22,18 @@ test <- data[-idx, ]
 # Grow the tree
 # dev.off()
 
-vec <- c(0,   1,   2,   1,   2,  1,  1,
-         0.9, 0,   2,   1,   1,   1,  1,
-         1,   1,   0,   1.6, 1,   1,  1,
-         0.9, 1.1, 2.0, 0,   1.6, 1,  1,
-         1,   1.1, 1.2, 2.4, 0,   1,  1,
-         1,   1,   1,   1,   1,   0,  1,
-         1,   1,   1,   1,   1,   1,  0)
+# vec <- c(0,   1,   2,   1,   2,  1,  1,
+#          0.9, 0,   2,   1,   1,   1,  1,
+#          1,   1,   0,   1.6, 1,   1,  1,
+#          0.9, 1.1, 2.0, 0,   1.6, 1,  1,
+#          1,   1.1, 1.2, 2.4, 0,   1,  1,
+#          1,   1,   1,   1,   1,   0,  1,
+#          1,   1,   1,   1,   1,   1,  0)
+# parms = list(loss = cost)
 
-cost = matrix(vec, nrow = 7, byrow = TRUE)
+# cost = matrix(vec, nrow = 7, byrow = TRUE)
 
-cartClass <- rpart(as.factor(quality)~., data=training, parms = list(loss = cost))
+cartClass <- rpart(as.factor(quality)~., data=training)
 cartClass = prune(cartClass, cp = 0.01)
 cartPredict <- predict(cartClass, test, type='class')
 cm <- table(Actual=test$quality, CART=cartPredict)
