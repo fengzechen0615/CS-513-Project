@@ -6,9 +6,8 @@ rm(list = ls())
 
 library("randomForest")
 
-data <- read.csv('WineQuality.csv', header=TRUE)
+data <- read.csv('winequality-red.csv', header=TRUE)
 data <- na.omit(data)
-data$type = as.integer(as.factor(data$type))
 data$quality = as.integer(as.factor(data$quality))
 
 set.seed(123)
@@ -27,20 +26,21 @@ test <- data[-idx, ]
 #   rate[i] <- mean(as.numeric(rf$err.rate))
 #   print(rf)
 # }
-
+# 
 # rate
 # plot(rate)
 
-# 0.6631549 0.6101290 0.6119128 0.6112290 0.6072801 0.6086186 0.6064997 0.6072955 0.6089973 0.6084176 0.6109786 0.6101957
-# mtry = 7
+# 0.6232179 0.6222972 0.6197441 0.6202953 0.6223850 0.6186066 0.6191017 0.6230324 0.6199652 0.6203628 0.6206012
+# which.min(rate)
+# mtry = 6
 
 # find the best ntree
-# rf <- randomForest(as.factor(quality)~., data=training, mtry=7, importance=TRUE, ntree=1000)
+# rf <- randomForest(as.factor(quality)~., data=training, mtry=6, importance=TRUE, ntree=1000)
 # plot(rf)
 
-# when trees equal 800, the model is becoming steady.
+# when trees equal 600, the model is becoming steady.
 
-randomForest <- randomForest(as.factor(quality)~., data=training, mtry=7, importance=TRUE, ntree=500, proximity=TRUE)
+randomForest <- randomForest(as.factor(quality)~., data=training, mtry=6, importance=TRUE, ntree=600, proximity=TRUE)
 
 # importance(randomForest)
 # max alcohol
