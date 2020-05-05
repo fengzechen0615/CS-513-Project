@@ -11,7 +11,7 @@ library(neuralnet)
 library(NeuralNetTools)
 ## read CSV file
 
-setwd("/Users/louyilin/RStudioProjects/FinalProject")
+#setwd("/Users/louyilin/RStudioProjects/FinalProject")
 data<-read.csv("winequality-red.csv",header = TRUE,na.strings = "?")
 #  clean NA datas
 # The predictor vars must be scaled data for the ANN fitting
