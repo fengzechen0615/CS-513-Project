@@ -11,7 +11,7 @@ library(neuralnet)
 library(NeuralNetTools)
 ## read CSV file
 
-#setwd("/Users/louyilin/RStudioProjects/FinalProject")
+setwd("/Users/louyilin/RStudioProjects/FinalProject")
 data<-read.csv("winequality-red.csv",header = TRUE,na.strings = "?")
 #  clean NA datas
 # The predictor vars must be scaled data for the ANN fitting
@@ -40,12 +40,13 @@ testNN<-annScaled[-idx,]
 ## ANN
 #ANN<- neuralnet(quality~fixed.acidity+volatile.acidity+citric.acid+residual.sugar+chlorides+free.sulfur.dioxide+total.sulfur.dioxide+density+pH+sulphates+alcohol,data=trainNN,hidden=c(4,2), threshold=0.01,act.fct = "logistic", linear.output = FALSE)
 ANN<- neuralnet(quality~.,data=trainNN,hidden=c(4,2), threshold=0.01,act.fct = "logistic", linear.output = FALSE)
-#plot(ANN)
+plot(ANN)
 k=ANN$result.matrix
 p=ANN$net.result
 
 #A=as.numeric(ANN$net.result)
 pred<-compute(ANN ,testNN[,-12])
+pred
 pred=(pred$net.result * (max(data$quality) - min(data$quality))) + min(data$quality)
 pred
 
@@ -65,10 +66,13 @@ gwplot(ANN, selected.covariate="pH")
 for (i in 1: length(pred)) {
   pred[i]=round(pred[i])
 }
-
+pred
 accuracy= (test$quality==pred)
 
 acc<-sum(accuracy)/length(accuracy)
+cm=table(actual=test$quality,ANN=pred)
+cm
+
 print(paste("the accuracy is",acc))
 
 # evaluation of variable importance

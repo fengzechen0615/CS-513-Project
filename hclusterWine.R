@@ -7,7 +7,7 @@
 rm(list=ls())
 dev.off
 #read CSV
-#setwd("/Users/louyilin/RStudioProjects/FinalProject")
+setwd("/Users/louyilin/RStudioProjects/FinalProject")
 hData<-read.csv("winequality-red.csv",header = TRUE,na.strings = "?")
 standardize <- function(x){x/max(x)} 
 #  clean NA datas
