@@ -1,4 +1,4 @@
-#  Group           : Wine Quality
+#  Group           : We have two datasets
 #  HW              : Final Project
 #  Algorithm       : K-means
 
@@ -10,7 +10,7 @@
 rm(list=ls())
 dev.off
 #read CSV
-setwd("/Users/louyilin/RStudioProjects/FinalProject")
+#setwd("/Users/louyilin/RStudioProjects/FinalProject")
 #kdata<-read.csv("winequalityN.csv",header = TRUE,na.strings = "?")
 kdata<-read.csv("winequality-red.csv",header = TRUE,na.strings = "?")
 standardize <- function(x){x/max(x)} 
