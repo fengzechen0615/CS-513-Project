@@ -76,4 +76,3 @@ cartWrong <- sum(test$quality != cartPredict)
 cartWrongRate <- cartWrong / length(test$quality)
 
 print(paste("Accuracy Rate is: ", (1 - cartWrongRate) * 100))
-# "Accuracy Rate is:  65"
